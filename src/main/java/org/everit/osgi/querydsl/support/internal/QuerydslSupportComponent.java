@@ -66,10 +66,9 @@ public class QuerydslSupportComponent implements QuerydslSupport {
     @Override
     public <R> R execute(final QuerydslCallable<R> callable) {
         try (Connection connection = dataSource.getConnection()) {
-            callable.call(connection, configuration);
+            return callable.call(connection, configuration);
         } catch (SQLException e) {
             throw configuration.translate(e);
         }
-        return null;
     }
 }
