@@ -20,7 +20,7 @@ SQLExceptions are caughed by QuerydslSupport, translated with the help of the Qu
 
 ## Usage with Java 8
 
-    return querydslSupport.execute((connection, configuration) {
+    return querydslSupport.execute((connection, configuration) -> {
         QResource qResource = new QResource("qResource");
         SQLInsertClause insertClause = new SQLInsertClause(connection, configuration, qResource);
         return insertClause.executeWithKey(qResource.resourceId);
