@@ -28,6 +28,7 @@ import com.mysema.query.sql.Configuration;
  * @param <R>
  *            Type of the return value
  */
+@FunctionalInterface
 public interface QuerydslCallable<R> {
 
     /**
