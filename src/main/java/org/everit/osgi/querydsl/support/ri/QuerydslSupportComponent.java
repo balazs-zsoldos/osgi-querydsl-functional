@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.everit.osgi.querydsl.support.internal;
+package org.everit.osgi.querydsl.support.ri;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -33,18 +33,16 @@ public class QuerydslSupportComponent implements QuerydslSupport {
   /**
    * Querydsl configuration.
    */
-  private Configuration configuration;
+  private final Configuration configuration;
 
   /**
    * DataSource for database connections.
    */
-  private DataSource dataSource;
+  private final DataSource dataSource;
 
-  public void bindConfiguration(final Configuration configuration) {
+  public QuerydslSupportComponent(Configuration configuration, DataSource dataSource) {
+    super();
     this.configuration = configuration;
-  }
-
-  public void bindDataSource(final DataSource dataSource) {
     this.dataSource = dataSource;
   }
 
