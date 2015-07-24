@@ -1,39 +1,38 @@
-/**
- * This file is part of Everit - QueryDSL Support.
+/*
+ * Copyright (C) 2011 Everit Kft. (http://everit.org)
  *
- * Everit - QueryDSL Support is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Everit - QueryDSL Support is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Everit - QueryDSL Support.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.everit.osgi.querydsl.support;
 
 /**
- * An OSGi service that implements this interface can be used to write less codes and have less references in the
- * components that do database operations based on Querydsl.
+ * An OSGi service that implements this interface can be used to write less codes and have less
+ * references in the components that do database operations based on Querydsl.
  *
- * Programmers who use this service should implement {@link QuerydslCallable} interface. That is a functional interface
- * so it can be used with lambda expressions.
+ * Programmers who use this service should implement {@link QuerydslCallable} interface. That is a
+ * functional interface so it can be used with lambda expressions.
  *
  */
 public interface QuerydslSupport {
 
-    /**
-     * Executing the callback implementation in the way that SQLExceptions are translated by Querydsl.
-     *
-     * @param callable
-     *            The functional interface that should be implemented by the programmer.
-     * @param <R>
-     *            The type of an optional return value.
-     * @return An optional return value.
-     */
-    <R> R execute(QuerydslCallable<R> callable);
+  /**
+   * Executing the callback implementation in the way that SQLExceptions are translated by Querydsl.
+   *
+   * @param callable
+   *          The functional interface that should be implemented by the programmer.
+   * @param <R>
+   *          The type of an optional return value.
+   * @return An optional return value.
+   */
+  <R> R execute(QuerydslCallable<R> callable);
 }

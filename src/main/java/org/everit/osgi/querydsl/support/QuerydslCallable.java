@@ -1,45 +1,45 @@
-/**
- * This file is part of Everit - QueryDSL Support.
+/*
+ * Copyright (C) 2011 Everit Kft. (http://everit.org)
  *
- * Everit - QueryDSL Support is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Everit - QueryDSL Support is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Everit - QueryDSL Support.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.everit.osgi.querydsl.support;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.mysema.query.sql.Configuration;
+import com.querydsl.sql.Configuration;
 
 /**
- * Functional interface to be able to do database operations with the help of Querydsl in the way that
- * {@link SQLException}s are handled by the exception translator of Querydsl.
+ * Functional interface to be able to do database operations with the help of Querydsl in the way
+ * that {@link SQLException}s are handled by the exception translator of Querydsl.
  *
  * @param <R>
- *            Type of the return value
+ *          Type of the return value
  */
 public interface QuerydslCallable<R> {
 
-    /**
-     * Function of the functional interface.
-     *
-     * @param connection
-     *            An opened database connection.
-     * @param configuration
-     *            The Querydsl configuration that should be used for Querydsl queries.
-     * @return An optional return value.
-     * @throws SQLException
-     *             The exceptions that are thrown from the function calls of connection will be translated by Querydsl.
-     */
-    R call(Connection connection, Configuration configuration) throws SQLException;
+  /**
+   * Function of the functional interface.
+   *
+   * @param connection
+   *          An opened database connection.
+   * @param configuration
+   *          The Querydsl configuration that should be used for Querydsl queries.
+   * @return An optional return value.
+   * @throws SQLException
+   *           The exceptions that are thrown from the function calls of connection will be
+   *           translated by Querydsl.
+   */
+  R call(Connection connection, Configuration configuration) throws SQLException;
 }
