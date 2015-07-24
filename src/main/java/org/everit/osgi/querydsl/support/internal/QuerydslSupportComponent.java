@@ -1,18 +1,17 @@
-/**
- * This file is part of Everit - QueryDSL Support.
+/*
+ * Copyright (C) 2011 Everit Kft. (http://everit.org)
  *
- * Everit - QueryDSL Support is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * Everit - QueryDSL Support is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Lesser General Public License for more details.
+ *         http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public License
- * along with Everit - QueryDSL Support.  If not, see <http://www.gnu.org/licenses/>.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package org.everit.osgi.querydsl.support.internal;
 
@@ -21,54 +20,40 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.everit.osgi.querydsl.support.QuerydslCallable;
 import org.everit.osgi.querydsl.support.QuerydslSupport;
-import org.everit.osgi.querydsl.support.QuerydslSupportConstants;
 
-import com.mysema.query.sql.Configuration;
+import com.querydsl.sql.Configuration;
 
 /**
  * Simple component that registers {@link QuerydslSupport} as an OSGi service.
  */
-@Component(name = QuerydslSupportConstants.SERVICE_FACTORYPID_QUERYDSL_SUPPORT, metatype = true,
-        configurationFactory = true, policy = ConfigurationPolicy.REQUIRE)
-@Properties({ @Property(name = QuerydslSupportConstants.PROP_DATASOURCE_TARGET),
-        @Property(name = QuerydslSupportConstants.PROP_CONFIGURATION_TARGET) })
-@Service
 public class QuerydslSupportComponent implements QuerydslSupport {
 
-    /**
-     * Querydsl configuration.
-     */
-    @Reference
-    private Configuration configuration;
+  /**
+   * Querydsl configuration.
+   */
+  private Configuration configuration;
 
-    /**
-     * DataSource for database connections.
-     */
-    @Reference
-    private DataSource dataSource;
+  /**
+   * DataSource for database connections.
+   */
+  private DataSource dataSource;
 
-    public void bindConfiguration(final Configuration configuration) {
-        this.configuration = configuration;
+  public void bindConfiguration(final Configuration configuration) {
+    this.configuration = configuration;
+  }
+
+  public void bindDataSource(final DataSource dataSource) {
+    this.dataSource = dataSource;
+  }
+
+  @Override
+  public <R> R execute(final QuerydslCallable<R> callable) {
+    try (Connection connection = dataSource.getConnection()) {
+      return callable.call(connection, configuration);
+    } catch (SQLException e) {
+      throw configuration.translate(e);
     }
-
-    public void bindDataSource(final DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
-
-    @Override
-    public <R> R execute(final QuerydslCallable<R> callable) {
-        try (Connection connection = dataSource.getConnection()) {
-            return callable.call(connection, configuration);
-        } catch (SQLException e) {
-            throw configuration.translate(e);
-        }
-    }
+  }
 }
