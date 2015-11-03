@@ -18,7 +18,7 @@ package org.everit.persistence.querydsl.support;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.mysema.query.sql.Configuration;
+import com.querydsl.sql.Configuration;
 
 /**
  * Functional interface to be able to do database operations with the help of Querydsl in the way
